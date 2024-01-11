@@ -160,14 +160,14 @@ GSUFFIX=${GSUFFIX:-".nc"}
 SFCG03=${SFCG03:-${COM_ATMOS_HISTORY_PREV}/${GPREFIX}sfcf003${GSUFFIX}}
 SFCG04=${SFCG04:-${COM_ATMOS_HISTORY_PREV}/${GPREFIX}sfcf004${GSUFFIX}}
 SFCG05=${SFCG05:-${COM_ATMOS_HISTORY_PREV}/${GPREFIX}sfcf005${GSUFFIX}}
-SFCGES=${SFCGES:-${COM_ATMOS_HISTORY_PREV}/${GPREFIX}sfcf006${GSUFFIX}}
+SFCGES=${SFCGES:-${COM_ATMOS_HISTORY_PREV}/${GPREFIX}sfcf001${GSUFFIX}}
 SFCG07=${SFCG07:-${COM_ATMOS_HISTORY_PREV}/${GPREFIX}sfcf007${GSUFFIX}}
 SFCG08=${SFCG08:-${COM_ATMOS_HISTORY_PREV}/${GPREFIX}sfcf008${GSUFFIX}}
 SFCG09=${SFCG09:-${COM_ATMOS_HISTORY_PREV}/${GPREFIX}sfcf009${GSUFFIX}}
 ATMG03=${ATMG03:-${COM_ATMOS_HISTORY_PREV}/${GPREFIX}atmf003${GSUFFIX}}
 ATMG04=${ATMG04:-${COM_ATMOS_HISTORY_PREV}/${GPREFIX}atmf004${GSUFFIX}}
 ATMG05=${ATMG05:-${COM_ATMOS_HISTORY_PREV}/${GPREFIX}atmf005${GSUFFIX}}
-ATMGES=${ATMGES:-${COM_ATMOS_HISTORY_PREV}/${GPREFIX}atmf006${GSUFFIX}}
+ATMGES=${ATMGES:-${COM_ATMOS_HISTORY_PREV}/${GPREFIX}atmf001${GSUFFIX}}
 ATMG07=${ATMG07:-${COM_ATMOS_HISTORY_PREV}/${GPREFIX}atmf007${GSUFFIX}}
 ATMG08=${ATMG08:-${COM_ATMOS_HISTORY_PREV}/${GPREFIX}atmf008${GSUFFIX}}
 ATMG09=${ATMG09:-${COM_ATMOS_HISTORY_PREV}/${GPREFIX}atmf009${GSUFFIX}}
@@ -243,8 +243,8 @@ JCAP=${JCAP:--9999} # there is no jcap in these files
 
 # Get header information from Ensemble Guess files
 if [ ${DOHYBVAR} = "YES" ]; then
-   SFCGES_ENSMEAN=${SFCGES_ENSMEAN:-${COM_ATMOS_HISTORY_ENS_PREV}/${GPREFIX_ENS}sfcf006.ensmean.nc}
-   export ATMGES_ENSMEAN=${ATMGES_ENSMEAN:-${COM_ATMOS_HISTORY_ENS_PREV}/${GPREFIX_ENS}atmf006.ensmean.nc}
+   SFCGES_ENSMEAN=${SFCGES_ENSMEAN:-${COM_ATMOS_HISTORY_ENS_PREV}/${GPREFIX_ENS}sfcf001.ensmean.nc}
+   export ATMGES_ENSMEAN=${ATMGES_ENSMEAN:-${COM_ATMOS_HISTORY_ENS_PREV}/${GPREFIX_ENS}atmf001.ensmean.nc}
    LONB_ENKF=${LONB_ENKF:-$(${NCLEN} ${ATMGES_ENSMEAN} grid_xt)} # get LONB_ENKF
    LATB_ENKF=${LATB_ENKF:-$(${NCLEN} ${ATMGES_ENSMEAN} grid_yt)} # get LATB_ENFK
    LEVS_ENKF=${LEVS_ENKF:-$(${NCLEN} ${ATMGES_ENSMEAN} pfull)} # get LATB_ENFK
@@ -492,23 +492,23 @@ ${NLN} ${GRADSTAT} radstat.gdas
 
 ##############################################################
 # Required model guess files
-${NLN} ${ATMG03} sigf03
-${NLN} ${ATMGES} sigf06
-${NLN} ${ATMG09} sigf09
+#${NLN} ${ATMG03} sigf03
+${NLN} ${ATMGES} sigf01
+#${NLN} ${ATMG09} sigf09
 
-${NLN} ${SFCG03} sfcf03
-${NLN} ${SFCGES} sfcf06
-${NLN} ${SFCG09} sfcf09
+#${NLN} ${SFCG03} sfcf03
+${NLN} ${SFCGES} sfcf01
+#${NLN} ${SFCG09} sfcf09
 
-[[ -f ${ATMG04} ]] && ${NLN} ${ATMG04} sigf04
-[[ -f ${ATMG05} ]] && ${NLN} ${ATMG05} sigf05
-[[ -f ${ATMG07} ]] && ${NLN} ${ATMG07} sigf07
-[[ -f ${ATMG08} ]] && ${NLN} ${ATMG08} sigf08
-
-[[ -f ${SFCG04} ]] && ${NLN} ${SFCG04} sfcf04
-[[ -f ${SFCG05} ]] && ${NLN} ${SFCG05} sfcf05
-[[ -f ${SFCG07} ]] && ${NLN} ${SFCG07} sfcf07
-[[ -f ${SFCG08} ]] && ${NLN} ${SFCG08} sfcf08
+#[[ -f ${ATMG04} ]] && ${NLN} ${ATMG04} sigf04
+#[[ -f ${ATMG05} ]] && ${NLN} ${ATMG05} sigf05
+#[[ -f ${ATMG07} ]] && ${NLN} ${ATMG07} sigf07
+#[[ -f ${ATMG08} ]] && ${NLN} ${ATMG08} sigf08
+#
+#[[ -f ${SFCG04} ]] && ${NLN} ${SFCG04} sfcf04
+#[[ -f ${SFCG05} ]] && ${NLN} ${SFCG05} sfcf05
+#[[ -f ${SFCG07} ]] && ${NLN} ${SFCG07} sfcf07
+#[[ -f ${SFCG08} ]] && ${NLN} ${SFCG08} sfcf08
 
 if [ ${DOHYBVAR} = "YES" ]; then
 
@@ -518,7 +518,7 @@ if [ ${DOHYBVAR} = "YES" ]; then
    ENKF_SUFFIX="s"
    [[ ${SMOOTH_ENKF} = "NO" ]] && ENKF_SUFFIX=""
 
-   fhrs="06"
+   fhrs="01"
    if [ ${l4densvar} = ".true." ]; then
       fhrs="03 04 05 06 07 08 09"
       nhr_obsbin=1
@@ -545,7 +545,7 @@ if [ ${JCAP} -ne ${JCAP_A} ]; then
    if [ ${DOHYBVAR} = "YES" -a ${JCAP_A} = ${JCAP_ENKF} ]; then
       if [ -e ${SFCGES_ENSMEAN} ]; then
          USE_READIN_ANL_SFCMASK=.true.
-         ${NLN} ${SFCGES_ENSMEAN} sfcf06_anlgrid
+         ${NLN} ${SFCGES_ENSMEAN} sfcf01_anlgrid
       else
          echo "Warning: Inconsistent sfc mask between analysis and ensemble grids, GSI will interpolate"
       fi
